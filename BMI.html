@@ -35,6 +35,20 @@
         </div>
         <script type="text/babel">
             class BMI extends React.Component {
+
+                constructor(props)
+                {
+                    super(props);
+                    const inchesUnit=1/12
+                    this.state ={
+                        weight: "",
+                        inches: "",
+                        feet: "",
+                        meter: "",
+                        BMI: ""
+                    }
+                }
+
                 render(){
                     return(
                         <form>
@@ -42,7 +56,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text  text-white">Weight</span>
                             </div>
-                            <input type="number" class="form-control"/>
+                            <input type="number" onInput={this.weight} value={this.state.weight} class="form-control"/>
                             <div class="input-group-append">
                                 <span class="input-group-text  text-white">Kg</span>
                             </div>
@@ -51,32 +65,65 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text  text-white">Height</span>
                                 </div>
-                                <input type="number" class="form-control"/>
+                                <input type="number" onInput={this.feet} value={this.state.feet} class="form-control"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text  text-white">Ft</span>
                                 </div>
-                                <input type="number" class="form-control"/>
+                                <input type="number" onInput={this.inches} value={this.state.inches} class="form-control"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text  text-white">Inch</span>
                                 </div>
                             </div><br/>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" onClick={this.submit} class="btn btn-success">Submit</button>
+                        <div class="input-group my-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-white">BMI</span>
+                                    </div>
+                                    <input id="BMI" class="form-control" type="text" placeholder="Your BMI can view here.." value={this.state.BMI} disabled/>
+                                </div>
                         </form>
                     );
                 }
+
+                weight = (event)=>{
+                    this.setState(({
+                        weight: event.target.value
+                    }))
+                }
+
+                feet = (event)=>{
+                    this.setState(({
+                        feet: event.target.value
+                    }))
+                }
+
+                inches = (event)=>{
+                    this.setState(({
+                        inches: event.target.value
+                    }))
+                }
+
+                submit = ()=>{
+                    if(this.state.feet === "" || this.state.inches === "" || this.state.weight=="")
+                    {
+                        alert("Fill All input fields")
+                    }
+                    else
+                    {
+                        this.setState(state=>({
+                        meter: (this.state.feet * 0.3038) + (this.state.inches * 0.0254)
+                        }))
+                        this.setState(state=>({
+                            BMI: state.weight/(state.meter*state.meter)
+                        }))
+                    }
+                    event.preventDefault()
+                }
+
+
             }
 
-            function result()
-            {
-                return(
-                    <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text text-white">Result</span>
-                                </div>
-                                <input class="form-control" type="text" placeholder="Result can view here.." disabled/>
-                            </div>
-                );
-            }
+            
 
             ReactDOM.render(<BMI />,document.querySelector(".card-body"));
         </script>
