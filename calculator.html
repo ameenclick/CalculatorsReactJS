@@ -34,50 +34,128 @@
             </div>
         </div>
         <script type="text/babel">
-            class BMI extends React.Component {
+            class Cal extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        input1: "",
+                        input2: "",
+                        result: "",
+                    }
+
+                }
+
+
                 render(){
-                    return(
-                        <form>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text  text-white">Input1</span>
+                        return(
+                            <form>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text  text-white">Input1</span>
+                                    </div>
+                                    <input id="myInput" onChange={this.inputValue} type="number" value={this.state.input1} class="form-control"/>
+                                    <div class="input-group-append">
+                                        <button class="input-group-text text-white" onClick={this.addition}>+</button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button class="input-group-text text-white" onClick={this.subtraction}>-</button>
+                                    </div>
                                 </div>
-                                <input id="myInput" oninput="input1()" type="number" class="form-control"/>
-                                <div class="input-group-append">
-                                    <button class="input-group-text text-white">+</button>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text  text-white">Input2</span>
+                                    </div>
+                                    <input id="myInput2"  onInput={this.inputValue2} type="number"  value={this.state.input2} class="form-control"/>
+                                    <div class="input-group-append">
+                                        <button class="input-group-text text-white" onClick={this.mutiplication}>x</button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button class="input-group-text text-white" onClick={this.division}>/</button>
+                                    </div>
+                                </div><br/>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-white" value={this.state.result}>Result</span>
+                                    </div>
+                                    <input id="result" class="form-control" type="text" placeholder="Result can view here.." value={this.state.result} disabled/>
                                 </div>
-                                <div class="input-group-append">
-                                    <button class="input-group-text text-white">-</button>
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text  text-white">Input2</span>
-                                </div>
-                                <input type="number" class="form-control"/>
-                                <div class="input-group-append">
-                                    <button class="input-group-text text-white">*</button>
-                                </div>
-                                <div class="input-group-append">
-                                    <button class="input-group-text text-white">/</button>
-                                </div>
-                            </div><br/>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text text-white">Result</span>
-                                </div>
-                                <input id="result" class="form-control" type="text" placeholder="Result can view here.."/>
-                            </div>
-                        </form>
-                    );
-                }
-                input1(){
-                    var x=document.getElementById("myInput").value; 
-                    console.log(x)
-                    document.getElementById("result").value=x;
-                }
+                            </form>
+                        );
+                    }
+
+                    inputValue = (event) =>{
+                        this.setState(({
+                            input1: event.target.value
+                        }));
+                    }
+
+                    inputValue2 = (event) =>{
+                        this.setState(({
+                            input2: event.target.value
+                        }));
+                    }
+
+
+
+                    addition = () =>{
+                        if(this.state.input1 === "" || this.state.input2 === "")
+                        {
+                            alert("Fill both inputs")
+                        }
+                        else
+                        {
+                            this.setState(state =>(
+                            {
+                                result: parseFloat(state.input1)+parseFloat(state.input2)
+                            })) 
+                            event.preventDefault()
+                        }
+                        }
+                    subtraction = () =>{
+                        if(this.state.input1 === "" || this.state.input2 === "")
+                        {
+                            alert("Fill both inputs")
+                        }
+                        else
+                        {
+                            this.setState(state =>(
+                            {
+                                result: parseFloat(state.input1)-parseFloat(state.input2)
+                            })) 
+                            event.preventDefault()
+                        }
+                        }
+                    mutiplication = () =>{
+                        if(this.state.input1 === "" || this.state.input2 === "")
+                        {
+                            alert("Fill both inputs")
+                        }
+                        else
+                        {
+                            this.setState(state =>(
+                            {
+                                result: parseFloat(state.input1)*parseFloat(state.input2)
+                            })) 
+                            event.preventDefault()
+                        }
+                    }
+
+                    division = () =>{
+                        if(this.state.input1 === "" || this.state.input2 === "")
+                        {
+                            alert("Fill both inputs")
+                        }
+                        else
+                        {
+                            this.setState(state =>(
+                            {
+                                result: parseFloat(state.input1)/parseFloat(state.input2)
+                            })) 
+                            event.preventDefault()
+                        }
+                    }
             }
-            ReactDOM.render(<BMI />,document.querySelector(".card-body"));
+            ReactDOM.render(<Cal />,document.querySelector(".card-body"));
         </script>
     </body>
 </html>
